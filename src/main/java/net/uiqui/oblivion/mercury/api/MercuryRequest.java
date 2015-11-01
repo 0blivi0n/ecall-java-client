@@ -50,8 +50,9 @@ public class MercuryRequest extends OtpErlangTuple {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public void write(final OutputStream os) throws IOException {
-		final OtpOutputStream stream = new OtpOutputStream(this);
-		os.write(OtpExternal.versionTag);
+		final OtpOutputStream stream = new OtpOutputStream();
+		stream.write(OtpExternal.versionTag);
+		stream.write_any(this);
 		stream.writeTo(os);
 		stream.close();
 	}
@@ -69,7 +70,7 @@ public class MercuryRequest extends OtpErlangTuple {
 	 * The Class Builder.
 	 */
 	public static class Builder {
-		private OtpErlangObject[] elems = new OtpErlangObject[5];
+		private final OtpErlangObject[] elems = new OtpErlangObject[5];
 		
 		private Builder() {
 			elems[0] = new OtpErlangAtom(MercuryConstants.REQUEST);
@@ -96,7 +97,6 @@ public class MercuryRequest extends OtpErlangTuple {
 		 */
 		public Builder resource(final String[] resource) {			
 			elems[2] = Converter.encode(resource);
-			
 			return this;
 		}	
 		
@@ -108,7 +108,6 @@ public class MercuryRequest extends OtpErlangTuple {
 		 */
 		public Builder resource(final List<String> resource) {			
 			elems[2] = Converter.encode(resource);
-			
 			return this;
 		}		
 		
@@ -120,7 +119,6 @@ public class MercuryRequest extends OtpErlangTuple {
 		 */
 		public Builder params(final Param[] params) {
 			elems[3] = Converter.encode(params);
-			
 			return this;
 		}
 		
@@ -132,7 +130,6 @@ public class MercuryRequest extends OtpErlangTuple {
 		 */
 		public Builder params(final List<Param> params) {
 			elems[3] = Converter.encode(params);
-			
 			return this;
 		}		
 		
@@ -144,7 +141,6 @@ public class MercuryRequest extends OtpErlangTuple {
 		 */
 		public Builder payload(final Object payload) {
 			elems[4] = Converter.encode(payload);
-			
 			return this;
 		}
 		

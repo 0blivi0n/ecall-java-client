@@ -31,7 +31,7 @@ public class ConnectionError extends Exception {
 	 * @param message the message
 	 * @param cause the cause
 	 */
-	public ConnectionError(String message, Throwable cause) {
+	public ConnectionError(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 }

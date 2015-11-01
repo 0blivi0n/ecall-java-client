@@ -58,9 +58,7 @@ public class Converter {
 
 		if (input instanceof Param) {
 			final Param param = (Param) input;
-
 			final OtpErlangObject[] tuple = { Converter.encode(param.name()), Converter.encode(param.value()) };
-
 			return new OtpErlangTuple(tuple);
 		}
 

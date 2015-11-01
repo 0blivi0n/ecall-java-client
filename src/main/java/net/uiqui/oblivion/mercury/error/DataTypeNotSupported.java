@@ -30,7 +30,7 @@ public class DataTypeNotSupported extends RuntimeException {
 	 *
 	 * @param message the message
 	 */
-	public DataTypeNotSupported(String message) {
+	public DataTypeNotSupported(final String message) {
 		super(message);
 	}
 }

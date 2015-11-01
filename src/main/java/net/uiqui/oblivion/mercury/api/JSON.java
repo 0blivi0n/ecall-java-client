@@ -28,14 +28,14 @@ import java.util.Map;
  * The Class JSON.
  */
 public class JSON {
-	private List<Field> fields = new ArrayList<JSON.Field>();
+	private final List<Field> fields = new ArrayList<JSON.Field>();
 	
 	/**
 	 * Instantiates a new json.
 	 *
 	 * @param fields the fields
 	 */
-	public JSON(Field...fields) {
+	public JSON(final Field...fields) {
 		for (Field field : fields) {
 			this.fields.add(field);
 		}
@@ -48,9 +48,8 @@ public class JSON {
 	 * @param value the value
 	 * @return the json
 	 */
-	public JSON field(String name, Object value) {
+	public JSON field(final String name, final Object value) {
 		fields.add(new Field(name, value));
-		
 		return this;
 	}
 	
@@ -116,7 +115,7 @@ public class JSON {
 		 * @param name the name
 		 * @param value the value
 		 */
-		public Field(String name, Object value) {
+		public Field(final String name, final Object value) {
 			super(name, value);
 		}
 

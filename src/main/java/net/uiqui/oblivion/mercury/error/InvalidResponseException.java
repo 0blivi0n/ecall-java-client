@@ -31,7 +31,7 @@ public class InvalidResponseException extends Exception {
 	 * @param message the message
 	 * @param cause the cause
 	 */
-	public InvalidResponseException(String message, Throwable cause) {
+	public InvalidResponseException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 
@@ -40,7 +40,7 @@ public class InvalidResponseException extends Exception {
 	 *
 	 * @param message the message
 	 */
-	public InvalidResponseException(String message) {
+	public InvalidResponseException(final String message) {
 		super(message);
 	}
 
@@ -49,7 +49,7 @@ public class InvalidResponseException extends Exception {
 	 *
 	 * @param cause the cause
 	 */
-	public InvalidResponseException(Throwable cause) {
+	public InvalidResponseException(final Throwable cause) {
 		super(cause);
 	}
 }

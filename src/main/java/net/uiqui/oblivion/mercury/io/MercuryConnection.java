@@ -35,18 +35,18 @@ import com.ericsson.otp.erlang.OtpInputStream;
 
 public class MercuryConnection {
 	private Socket socket = null;
-	private byte[] buffer = new byte[65507];
-	
+	private final byte[] buffer = new byte[65507];
+
 	public MercuryConnection(final String server, final int port) throws ConnectionError {
 		try {
-		socket = new Socket(server, port);
-		socket.setSoTimeout(5000);
+			socket = new Socket(server, port);
+			socket.setSoTimeout(5000);
 		} catch (Exception e) {
 			throw new ConnectionError("Error connecting to server", e);
 		}
 	}
-	
-	public MercuryResponse call(final MercuryRequest request) throws CommunicationError, InvalidResponseException {		
+
+	public MercuryResponse call(final MercuryRequest request) throws CommunicationError, InvalidResponseException {
 		try {
 			final OutputStream out = socket.getOutputStream();
 			final InputStream in = socket.getInputStream();
@@ -59,10 +59,10 @@ public class MercuryConnection {
 			if (bytesReaded > 0) {
 				final byte[] payload = new byte[bytesReaded];
 				System.arraycopy(buffer, 0, payload, 0, bytesReaded);
-				
+
 				final OtpInputStream buf = new OtpInputStream(payload);
 				final OtpErlangObject response = OtpErlangObject.decode(buf);
-				
+
 				return MercuryResponse.parse(response);
 			}
 

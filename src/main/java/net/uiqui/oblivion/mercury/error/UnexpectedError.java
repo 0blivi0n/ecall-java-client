@@ -31,7 +31,7 @@ public class UnexpectedError extends RuntimeException {
 	 * @param message the message
 	 * @param cause the cause
 	 */
-	public UnexpectedError(String message, Throwable cause) {
+	public UnexpectedError(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 
@@ -40,7 +40,7 @@ public class UnexpectedError extends RuntimeException {
 	 *
 	 * @param message the message
 	 */
-	public UnexpectedError(String message) {
+	public UnexpectedError(final String message) {
 		super(message);
 	}
 
@@ -49,7 +49,7 @@ public class UnexpectedError extends RuntimeException {
 	 *
 	 * @param cause the cause
 	 */
-	public UnexpectedError(Throwable cause) {
+	public UnexpectedError(final Throwable cause) {
 		super(cause);
 	}
 }

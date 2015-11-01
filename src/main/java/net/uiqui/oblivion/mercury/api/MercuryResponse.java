@@ -30,10 +30,9 @@ import net.uiqui.oblivion.mercury.util.Converter;
 import net.uiqui.oblivion.mercury.util.MercuryConstants;
 
 import com.ericsson.otp.erlang.OtpErlangAtom;
-import com.ericsson.otp.erlang.OtpErlangInt;
 import com.ericsson.otp.erlang.OtpErlangList;
+import com.ericsson.otp.erlang.OtpErlangLong;
 import com.ericsson.otp.erlang.OtpErlangObject;
-import com.ericsson.otp.erlang.OtpErlangRangeException;
 import com.ericsson.otp.erlang.OtpErlangTuple;
 
 /**
@@ -42,11 +41,11 @@ import com.ericsson.otp.erlang.OtpErlangTuple;
 public class MercuryResponse implements Serializable {
 	private static final long serialVersionUID = 6294092702616550011L;
 
-	private Integer status = 0;
+	private Long status = null;
 	private List<Param> params = null;
 	private Object payload = null;
 
-	private MercuryResponse(final Integer status, final List<Param> params, final Object payload) {
+	private MercuryResponse(final Long status, final List<Param> params, final Object payload) {
 		this.status = status;
 		this.params = params;
 		this.payload = payload;
@@ -55,9 +54,9 @@ public class MercuryResponse implements Serializable {
 	/**
 	 * Status.
 	 *
-	 * @return the integer
+	 * @return the long
 	 */
-	public Integer status() {
+	public long status() {
 		return status;
 	}
 
@@ -132,7 +131,7 @@ public class MercuryResponse implements Serializable {
 
 				if (tupleType.atomValue().equals(MercuryConstants.RESPONSE)) {
 					try {
-						final Integer status = parseStatus(tuple.elementAt(1));
+						final Long status = parseStatus(tuple.elementAt(1));
 						final List<Param> params = parseParams(tuple.elementAt(2));
 						final Object payload = parsePayload(tuple.elementAt(3));
 
@@ -154,22 +153,18 @@ public class MercuryResponse implements Serializable {
 		throw new InvalidResponseException("Response is invalid!");
 	}
 
-	private static Integer parseStatus(final OtpErlangObject elementAt) throws InvalidResponseException {
+	private static Long parseStatus(final OtpErlangObject elementAt) throws InvalidResponseException {
 		if (elementAt == null) {
 			throw new InvalidResponseException("Response is invalid - status can't be null");
 		}
 		
-		if (elementAt instanceof OtpErlangInt) {
-			final OtpErlangInt status = (OtpErlangInt) elementAt;
+		if (elementAt instanceof OtpErlangLong) {
+			final OtpErlangLong status = (OtpErlangLong) elementAt;
 			
-			try {
-				return status.intValue();
-			} catch (OtpErlangRangeException e) {
-				throw new InvalidResponseException("Response is invalid - status must be an integer", e);
-			}
+			return status.longValue();
 		}
 		
-		throw new InvalidResponseException("Response is invalid - status must be an integer");
+		throw new InvalidResponseException("Response is invalid - status must be an long");
 	}
 
 	private static List<Param> parseParams(final OtpErlangObject elementAt) throws InvalidResponseException {

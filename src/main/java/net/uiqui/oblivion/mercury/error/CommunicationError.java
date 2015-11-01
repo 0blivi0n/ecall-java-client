@@ -31,7 +31,7 @@ public class CommunicationError extends Exception {
 	 * @param message the message
 	 * @param cause the cause
 	 */
-	public CommunicationError(String message, Throwable cause) {
+	public CommunicationError(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 }
