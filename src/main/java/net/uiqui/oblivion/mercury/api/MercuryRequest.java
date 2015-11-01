@@ -33,6 +33,9 @@ import com.ericsson.otp.erlang.OtpErlangTuple;
 import com.ericsson.otp.erlang.OtpExternal;
 import com.ericsson.otp.erlang.OtpOutputStream;
 
+/**
+ * The Class MercuryRequest.
+ */
 public class MercuryRequest extends OtpErlangTuple {
 	private static final long serialVersionUID = 850764874192765477L;
 
@@ -40,6 +43,12 @@ public class MercuryRequest extends OtpErlangTuple {
 		super(elems);
 	}
 	
+	/**
+	 * Write.
+	 *
+	 * @param os the os
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public void write(final OutputStream os) throws IOException {
 		final OtpOutputStream stream = new OtpOutputStream(this);
 		os.write(OtpExternal.versionTag);
@@ -47,10 +56,18 @@ public class MercuryRequest extends OtpErlangTuple {
 		stream.close();
 	}
 	
+	/**
+	 * Builder.
+	 *
+	 * @return the builder
+	 */
 	public static Builder builder() {
 		return new Builder();
 	}
 
+	/**
+	 * The Class Builder.
+	 */
 	public static class Builder {
 		private OtpErlangObject[] elems = new OtpErlangObject[5];
 		
@@ -60,41 +77,82 @@ public class MercuryRequest extends OtpErlangTuple {
 			elems[4] = new OtpErlangAtom(MercuryConstants.EMPTY);
 		}
 		
+		/**
+		 * Operation.
+		 *
+		 * @param opName the op name
+		 * @return the builder
+		 */
 		public Builder operation(final String opName) {
 			elems[1] = Converter.encode(opName);
 			return this;
 		}
 		
+		/**
+		 * Resource.
+		 *
+		 * @param resource the resource
+		 * @return the builder
+		 */
 		public Builder resource(final String[] resource) {			
 			elems[2] = Converter.encode(resource);
 			
 			return this;
 		}	
 		
+		/**
+		 * Resource.
+		 *
+		 * @param resource the resource
+		 * @return the builder
+		 */
 		public Builder resource(final List<String> resource) {			
 			elems[2] = Converter.encode(resource);
 			
 			return this;
 		}		
 		
+		/**
+		 * Params.
+		 *
+		 * @param params the params
+		 * @return the builder
+		 */
 		public Builder params(final Param[] params) {
 			elems[3] = Converter.encode(params);
 			
 			return this;
 		}
 		
+		/**
+		 * Params.
+		 *
+		 * @param params the params
+		 * @return the builder
+		 */
 		public Builder params(final List<Param> params) {
 			elems[3] = Converter.encode(params);
 			
 			return this;
 		}		
 		
+		/**
+		 * Payload.
+		 *
+		 * @param payload the payload
+		 * @return the builder
+		 */
 		public Builder payload(final Object payload) {
 			elems[4] = Converter.encode(payload);
 			
 			return this;
 		}
 		
+		/**
+		 * Builds the.
+		 *
+		 * @return the mercury request
+		 */
 		public MercuryRequest build() {
 			return new MercuryRequest(elems);
 		}

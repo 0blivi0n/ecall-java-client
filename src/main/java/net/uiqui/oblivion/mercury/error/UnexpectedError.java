@@ -19,17 +19,36 @@
  */
 package net.uiqui.oblivion.mercury.error;
 
+/**
+ * The Class UnexpectedError.
+ */
 public class UnexpectedError extends RuntimeException {
 	private static final long serialVersionUID = 8222408192218632296L;
 
+	/**
+	 * Instantiates a new unexpected error.
+	 *
+	 * @param message the message
+	 * @param cause the cause
+	 */
 	public UnexpectedError(String message, Throwable cause) {
 		super(message, cause);
 	}
 
+	/**
+	 * Instantiates a new unexpected error.
+	 *
+	 * @param message the message
+	 */
 	public UnexpectedError(String message) {
 		super(message);
 	}
 
+	/**
+	 * Instantiates a new unexpected error.
+	 *
+	 * @param cause the cause
+	 */
 	public UnexpectedError(Throwable cause) {
 		super(cause);
 	}

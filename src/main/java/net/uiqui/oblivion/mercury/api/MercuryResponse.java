@@ -36,6 +36,9 @@ import com.ericsson.otp.erlang.OtpErlangObject;
 import com.ericsson.otp.erlang.OtpErlangRangeException;
 import com.ericsson.otp.erlang.OtpErlangTuple;
 
+/**
+ * The Class MercuryResponse.
+ */
 public class MercuryResponse implements Serializable {
 	private static final long serialVersionUID = 6294092702616550011L;
 
@@ -49,14 +52,29 @@ public class MercuryResponse implements Serializable {
 		this.payload = payload;
 	}
 
+	/**
+	 * Status.
+	 *
+	 * @return the integer
+	 */
 	public Integer status() {
 		return status;
 	}
 
+	/**
+	 * Params.
+	 *
+	 * @return the list
+	 */
 	public List<Param> params() {
 		return params;
 	}
 
+	/**
+	 * Params2 map.
+	 *
+	 * @return the map
+	 */
 	public Map<String, Object> params2Map() {
 		if (params == null) {
 			return null;
@@ -71,15 +89,30 @@ public class MercuryResponse implements Serializable {
 		return map;
 	}
 
+	/**
+	 * Payload.
+	 *
+	 * @return the object
+	 */
 	public Object payload() {
 		return payload;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "MercuryResponse [status=" + status + ", params=" + params + ", payload=" + payload + "]";
 	}
 
+	/**
+	 * Parses the.
+	 *
+	 * @param response the response
+	 * @return the mercury response
+	 * @throws InvalidResponseException the invalid response exception
+	 */
 	public static MercuryResponse parse(final OtpErlangObject response) throws InvalidResponseException {
 		if (response == null) {
 			return null;
@@ -170,7 +203,7 @@ public class MercuryResponse implements Serializable {
 		
 		throw new InvalidResponseException("Response is invalid - params is not a list of tuple/2");
 	}
-
+	
 	private static Object parsePayload(final OtpErlangObject elementAt) {
 		if (elementAt == null) {
 			return null;

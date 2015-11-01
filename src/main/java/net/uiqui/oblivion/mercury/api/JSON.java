@@ -24,25 +24,50 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The Class JSON.
+ */
 public class JSON {
 	private List<Field> fields = new ArrayList<JSON.Field>();
 	
+	/**
+	 * Instantiates a new json.
+	 *
+	 * @param fields the fields
+	 */
 	public JSON(Field...fields) {
 		for (Field field : fields) {
 			this.fields.add(field);
 		}
 	}
 	
+	/**
+	 * Field.
+	 *
+	 * @param name the name
+	 * @param value the value
+	 * @return the json
+	 */
 	public JSON field(String name, Object value) {
 		fields.add(new Field(name, value));
 		
 		return this;
 	}
 	
+	/**
+	 * Fields.
+	 *
+	 * @return the list
+	 */
 	public List<Field> fields()  {
 		return fields;
 	}
 	
+	/**
+	 * To map.
+	 *
+	 * @return the map
+	 */
 	public Map<String, Object> toMap() {
 		final Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -53,6 +78,9 @@ public class JSON {
 		return map;
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		final StringBuilder builder = new StringBuilder();
@@ -76,13 +104,25 @@ public class JSON {
 		return builder.toString();
 	}	
 	
+	/**
+	 * The Class Field.
+	 */
 	public static class Field extends Param {
 		private static final long serialVersionUID = -1349404110784531443L;
 
+		/**
+		 * Instantiates a new field.
+		 *
+		 * @param name the name
+		 * @param value the value
+		 */
 		public Field(String name, Object value) {
 			super(name, value);
 		}
 
+		/* (non-Javadoc)
+		 * @see net.uiqui.oblivion.mercury.api.Param#toString()
+		 */
 		@Override
 		public String toString() {
 			return "'" + name() + "' : " + value();

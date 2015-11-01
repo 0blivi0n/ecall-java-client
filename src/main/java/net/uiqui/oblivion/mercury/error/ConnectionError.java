@@ -19,9 +19,18 @@
  */
 package net.uiqui.oblivion.mercury.error;
 
+/**
+ * The Class ConnectionError.
+ */
 public class ConnectionError extends Exception {
 	private static final long serialVersionUID = -1072919449749013409L;
 
+	/**
+	 * Instantiates a new connection error.
+	 *
+	 * @param message the message
+	 * @param cause the cause
+	 */
 	public ConnectionError(String message, Throwable cause) {
 		super(message, cause);
 	}

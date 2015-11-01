@@ -19,17 +19,36 @@
  */
 package net.uiqui.oblivion.mercury.error;
 
+/**
+ * The Class InvalidResponseException.
+ */
 public class InvalidResponseException extends Exception {
 	private static final long serialVersionUID = -4571612450476911094L;
 
+	/**
+	 * Instantiates a new invalid response exception.
+	 *
+	 * @param message the message
+	 * @param cause the cause
+	 */
 	public InvalidResponseException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
+	/**
+	 * Instantiates a new invalid response exception.
+	 *
+	 * @param message the message
+	 */
 	public InvalidResponseException(String message) {
 		super(message);
 	}
 
+	/**
+	 * Instantiates a new invalid response exception.
+	 *
+	 * @param cause the cause
+	 */
 	public InvalidResponseException(Throwable cause) {
 		super(cause);
 	}

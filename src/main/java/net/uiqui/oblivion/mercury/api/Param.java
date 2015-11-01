@@ -21,24 +21,47 @@ package net.uiqui.oblivion.mercury.api;
 
 import java.io.Serializable;
 
+/**
+ * The Class Param.
+ */
 public class Param implements Serializable {
 	private static final long serialVersionUID = -4243692044456101670L;
-	
+
 	private String name = null;
 	private Object value = null;
 	
+	/**
+	 * Instantiates a new param.
+	 *
+	 * @param name the name
+	 * @param value the value
+	 */
 	public Param(final String name, final Object value) {
 		this.name = name;
 		this.value = value;
 	}
 	
+	/**
+	 * Name.
+	 *
+	 * @return the string
+	 */
 	public String name() {
 		return name;
 	}
+	
+	/**
+	 * Value.
+	 *
+	 * @return the object
+	 */
 	public Object value() {
 		return value;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "Param [name=" + name + ", value=" + value + "]";

@@ -19,9 +19,17 @@
  */
 package net.uiqui.oblivion.mercury.error;
 
+/**
+ * The Class DataTypeNotSupported.
+ */
 public class DataTypeNotSupported extends RuntimeException {
 	private static final long serialVersionUID = -6312055859659127845L;
 
+	/**
+	 * Instantiates a new data type not supported.
+	 *
+	 * @param message the message
+	 */
 	public DataTypeNotSupported(String message) {
 		super(message);
 	}
