@@ -1,0 +1,91 @@
+/*
+ * 0blivi0n-cache
+ * ==============
+ * Mercury Java Client
+ * 
+ * Copyright (C) 2015 Joaquim Rocha <jrocha@gmailbox.org>
+ * 
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package net.uiqui.oblivion.mercury.api;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class JSON {
+	private List<Field> fields = new ArrayList<JSON.Field>();
+	
+	public JSON(Field...fields) {
+		for (Field field : fields) {
+			this.fields.add(field);
+		}
+	}
+	
+	public JSON field(String name, Object value) {
+		fields.add(new Field(name, value));
+		
+		return this;
+	}
+	
+	public List<Field> fields()  {
+		return fields;
+	}
+	
+	public Map<String, Object> toMap() {
+		final Map<String, Object> map = new HashMap<String, Object>();
+		
+		for (Field field : fields) {
+			map.put(field.name(), field.value());
+		}
+		
+		return map;
+	}
+	
+	@Override
+	public String toString() {
+		final StringBuilder builder = new StringBuilder();
+		
+		builder.append("{");
+		
+		boolean first = true;
+		
+		for (Field field : fields) {
+			if (first) {
+				first = false;
+			} else {
+				builder.append(", ");
+			}
+			
+			builder.append(field);
+		}
+		
+		builder.append("}");
+		
+		return builder.toString();
+	}	
+	
+	public static class Field extends Param {
+		private static final long serialVersionUID = -1349404110784531443L;
+
+		public Field(String name, Object value) {
+			super(name, value);
+		}
+
+		@Override
+		public String toString() {
+			return "'" + name() + "' : " + value();
+		}
+	}
+}
