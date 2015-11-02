@@ -20,6 +20,10 @@
 package net.uiqui.oblivion.mercury.api;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The Class Param.
@@ -66,4 +70,36 @@ public class Param implements Serializable {
 	public String toString() {
 		return "Param [name=" + name + ", value=" + value + "]";
 	}
+	
+	/**
+	 * From map.
+	 *
+	 * @param paramMap the param map
+	 * @return the list
+	 */
+	public static List<Param> fromMap(final Map<String, Object> paramMap) {
+		final List<Param> params = new ArrayList<Param>();
+		
+		for (Map.Entry<String, Object> entry : paramMap.entrySet()) {
+			params.add(new Param(entry.getKey(), entry.getValue()));
+		}
+		
+		return params;
+	}
+
+	/**
+	 * To map.
+	 *
+	 * @param params the params
+	 * @return the map
+	 */
+	public static Map<String, Object> toMap(final List<Param> params) {
+		final Map<String, Object> map = new HashMap<String, Object>();
+		
+		for (Param param : params) {
+			map.put(param.name(), param.value());
+		}
+		
+		return map;
+	}	
 }

@@ -235,6 +235,7 @@ public class Converter {
 
 		if (input instanceof OtpErlangFloat) {
 			final OtpErlangFloat value = (OtpErlangFloat) input;
+			
 			try {
 				return value.floatValue();
 			} catch (OtpErlangRangeException e) {

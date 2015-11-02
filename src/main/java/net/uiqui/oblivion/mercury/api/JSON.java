@@ -104,6 +104,22 @@ public class JSON {
 	}	
 	
 	/**
+	 * From map.
+	 *
+	 * @param fieldMap the field map
+	 * @return the json
+	 */
+	public static JSON fromMap(final Map<String, Object> fieldMap) {
+		final JSON json = new JSON();
+		
+		for (Map.Entry<String, Object> entry : fieldMap.entrySet()) {
+			json.field(entry.getKey(), entry.getValue());
+		}
+		
+		return json;
+	}
+	
+	/**
 	 * The Class Field.
 	 */
 	public static class Field extends Param {
