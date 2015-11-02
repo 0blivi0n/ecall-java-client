@@ -21,6 +21,7 @@ package net.uiqui.oblivion.mercury.api;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.util.List;
 
 import net.uiqui.oblivion.mercury.util.Converter;
@@ -36,121 +37,201 @@ import com.ericsson.otp.erlang.OtpOutputStream;
 /**
  * The Class MercuryRequest.
  */
-public class MercuryRequest extends OtpErlangTuple {
+public class MercuryRequest implements Serializable {
 	private static final long serialVersionUID = 850764874192765477L;
 
-	private MercuryRequest(final OtpErlangObject[] elems) {
-		super(elems);
+	private OtpErlangTuple tuple = null;
+
+	private MercuryRequest(final OtpErlangTuple tuple) {
+		this.tuple = tuple;
 	}
-	
+
 	/**
 	 * Write.
 	 *
-	 * @param os the os
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @param os
+	 *            the os
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	public void write(final OutputStream os) throws IOException {
 		final OtpOutputStream stream = new OtpOutputStream();
 		stream.write(OtpExternal.versionTag);
-		stream.write_any(this);
+		stream.write_any(tuple);
 		stream.writeTo(os);
 		stream.close();
 	}
-	
+
 	/**
-	 * Builder.
+	 * Builds the.
 	 *
-	 * @return the builder
+	 * @param opName
+	 *            the op name
+	 * @param resource
+	 *            the resource
+	 * @return the mercury request
 	 */
-	public static Builder builder() {
-		return new Builder();
+	public static MercuryRequest build(final String opName, final String[] resource) {
+		final Builder builder = new Builder();
+		return builder.operation(opName).resource(resource).build();
 	}
 
 	/**
-	 * The Class Builder.
+	 * Builds the.
+	 *
+	 * @param opName
+	 *            the op name
+	 * @param resource
+	 *            the resource
+	 * @return the mercury request
 	 */
-	public static class Builder {
+	public static MercuryRequest build(final String opName, final List<String> resource) {
+		final Builder builder = new Builder();
+		return builder.operation(opName).resource(resource).build();
+	}
+
+	/**
+	 * Builds the.
+	 *
+	 * @param opName
+	 *            the op name
+	 * @param resource
+	 *            the resource
+	 * @param params
+	 *            the params
+	 * @return the mercury request
+	 */
+	public static MercuryRequest build(final String opName, final String[] resource, final Param[] params) {
+		final Builder builder = new Builder();
+		return builder.operation(opName).resource(resource).params(params).build();
+	}
+
+	/**
+	 * Builds the.
+	 *
+	 * @param opName
+	 *            the op name
+	 * @param resource
+	 *            the resource
+	 * @param params
+	 *            the params
+	 * @return the mercury request
+	 */
+	public static MercuryRequest build(final String opName, final List<String> resource, final List<Param> params) {
+		final Builder builder = new Builder();
+		return builder.operation(opName).resource(resource).params(params).build();
+	}
+
+	/**
+	 * Builds the.
+	 *
+	 * @param opName
+	 *            the op name
+	 * @param resource
+	 *            the resource
+	 * @param params
+	 *            the params
+	 * @param payload
+	 *            the payload
+	 * @return the mercury request
+	 */
+	public static MercuryRequest build(final String opName, final String[] resource, final Param[] params, final Object payload) {
+		final Builder builder = new Builder();
+		return builder.operation(opName).resource(resource).params(params).payload(payload).build();
+	}
+
+	/**
+	 * Builds the.
+	 *
+	 * @param opName
+	 *            the op name
+	 * @param resource
+	 *            the resource
+	 * @param params
+	 *            the params
+	 * @param payload
+	 *            the payload
+	 * @return the mercury request
+	 */
+	public static MercuryRequest build(final String opName, final List<String> resource, final List<Param> params, final Object payload) {
+		final Builder builder = new Builder();
+		return builder.operation(opName).resource(resource).params(params).payload(payload).build();
+	}
+
+	/**
+	 * Builds the.
+	 *
+	 * @param opName
+	 *            the op name
+	 * @param resource
+	 *            the resource
+	 * @param payload
+	 *            the payload
+	 * @return the mercury request
+	 */
+	public static MercuryRequest build(final String opName, final String[] resource, final Object payload) {
+		final Builder builder = new Builder();
+		return builder.operation(opName).resource(resource).payload(payload).build();
+	}
+
+	/**
+	 * Builds the.
+	 *
+	 * @param opName
+	 *            the op name
+	 * @param resource
+	 *            the resource
+	 * @param payload
+	 *            the payload
+	 * @return the mercury request
+	 */
+	public static MercuryRequest build(final String opName, final List<String> resource, final Object payload) {
+		final Builder builder = new Builder();
+		return builder.operation(opName).resource(resource).payload(payload).build();
+	}
+
+	private static class Builder {
 		private final OtpErlangObject[] elems = new OtpErlangObject[5];
-		
+
 		private Builder() {
 			elems[0] = new OtpErlangAtom(MercuryConstants.REQUEST);
 			elems[3] = new OtpErlangList();
 			elems[4] = new OtpErlangAtom(MercuryConstants.EMPTY);
 		}
-		
-		/**
-		 * Operation.
-		 *
-		 * @param opName the op name
-		 * @return the builder
-		 */
+
 		public Builder operation(final String opName) {
 			elems[1] = Converter.encode(opName);
 			return this;
 		}
-		
-		/**
-		 * Resource.
-		 *
-		 * @param resource the resource
-		 * @return the builder
-		 */
-		public Builder resource(final String[] resource) {			
+
+		public Builder resource(final String[] resource) {
 			elems[2] = Converter.encode(resource);
 			return this;
-		}	
-		
-		/**
-		 * Resource.
-		 *
-		 * @param resource the resource
-		 * @return the builder
-		 */
-		public Builder resource(final List<String> resource) {			
+		}
+
+		public Builder resource(final List<String> resource) {
 			elems[2] = Converter.encode(resource);
 			return this;
-		}		
-		
-		/**
-		 * Params.
-		 *
-		 * @param params the params
-		 * @return the builder
-		 */
+		}
+
 		public Builder params(final Param[] params) {
 			elems[3] = Converter.encode(params);
 			return this;
 		}
-		
-		/**
-		 * Params.
-		 *
-		 * @param params the params
-		 * @return the builder
-		 */
+
 		public Builder params(final List<Param> params) {
 			elems[3] = Converter.encode(params);
 			return this;
-		}		
-		
-		/**
-		 * Payload.
-		 *
-		 * @param payload the payload
-		 * @return the builder
-		 */
+		}
+
 		public Builder payload(final Object payload) {
 			elems[4] = Converter.encode(payload);
 			return this;
 		}
-		
-		/**
-		 * Builds the.
-		 *
-		 * @return the mercury request
-		 */
+
 		public MercuryRequest build() {
-			return new MercuryRequest(elems);
+			final OtpErlangTuple tuple = new OtpErlangTuple(elems);
+			return new MercuryRequest(tuple);
 		}
 	}
 }
