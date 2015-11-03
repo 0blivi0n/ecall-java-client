@@ -31,6 +31,7 @@ import java.util.Map;
 public class Param implements Serializable {
 	private static final long serialVersionUID = -4243692044456101670L;
 
+
 	private String name = null;
 	private Object value = null;
 	
@@ -102,4 +103,32 @@ public class Param implements Serializable {
 		
 		return map;
 	}	
+	
+	/**
+	 * The Class Builder.
+	 */
+	public static class Builder {
+		private final List<Param> params = new ArrayList<Param>();
+		
+		/**
+		 * Put.
+		 *
+		 * @param name the name
+		 * @param value the value
+		 * @return the builder
+		 */
+		public Builder put(final String name, final Object value) {
+			params.add(new Param(name, value));
+			return this;
+		}
+		
+		/**
+		 * Builds the.
+		 *
+		 * @return the list
+		 */
+		public List<Param> build() {
+			return params;
+		}
+	}
 }

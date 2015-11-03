@@ -28,7 +28,7 @@ import java.util.Map;
  * The Class JSON.
  */
 public class JSON {
-	private final List<Field> fields = new ArrayList<JSON.Field>();
+	private final List<Field> fields = new ArrayList<Field>();
 	
 	/**
 	 * Instantiates a new json.

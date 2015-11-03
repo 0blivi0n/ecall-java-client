@@ -83,41 +83,11 @@ public class MercuryRequest implements Serializable {
 	 *            the op name
 	 * @param resource
 	 *            the resource
-	 * @return the mercury request
-	 */
-	public static MercuryRequest build(final String opName, final List<String> resource) {
-		final Builder builder = new Builder();
-		return builder.operation(opName).resource(resource).build();
-	}
-
-	/**
-	 * Builds the.
-	 *
-	 * @param opName
-	 *            the op name
-	 * @param resource
-	 *            the resource
 	 * @param params
 	 *            the params
 	 * @return the mercury request
 	 */
-	public static MercuryRequest build(final String opName, final String[] resource, final Param[] params) {
-		final Builder builder = new Builder();
-		return builder.operation(opName).resource(resource).params(params).build();
-	}
-
-	/**
-	 * Builds the.
-	 *
-	 * @param opName
-	 *            the op name
-	 * @param resource
-	 *            the resource
-	 * @param params
-	 *            the params
-	 * @return the mercury request
-	 */
-	public static MercuryRequest build(final String opName, final List<String> resource, final List<Param> params) {
+	public static MercuryRequest build(final String opName, final String[] resource, final List<Param> params) {
 		final Builder builder = new Builder();
 		return builder.operation(opName).resource(resource).params(params).build();
 	}
@@ -135,25 +105,7 @@ public class MercuryRequest implements Serializable {
 	 *            the payload
 	 * @return the mercury request
 	 */
-	public static MercuryRequest build(final String opName, final String[] resource, final Param[] params, final Object payload) {
-		final Builder builder = new Builder();
-		return builder.operation(opName).resource(resource).params(params).payload(payload).build();
-	}
-
-	/**
-	 * Builds the.
-	 *
-	 * @param opName
-	 *            the op name
-	 * @param resource
-	 *            the resource
-	 * @param params
-	 *            the params
-	 * @param payload
-	 *            the payload
-	 * @return the mercury request
-	 */
-	public static MercuryRequest build(final String opName, final List<String> resource, final List<Param> params, final Object payload) {
+	public static MercuryRequest build(final String opName, final String[] resource, final List<Param> params, final Object payload) {
 		final Builder builder = new Builder();
 		return builder.operation(opName).resource(resource).params(params).payload(payload).build();
 	}
@@ -174,22 +126,6 @@ public class MercuryRequest implements Serializable {
 		return builder.operation(opName).resource(resource).payload(payload).build();
 	}
 
-	/**
-	 * Builds the.
-	 *
-	 * @param opName
-	 *            the op name
-	 * @param resource
-	 *            the resource
-	 * @param payload
-	 *            the payload
-	 * @return the mercury request
-	 */
-	public static MercuryRequest build(final String opName, final List<String> resource, final Object payload) {
-		final Builder builder = new Builder();
-		return builder.operation(opName).resource(resource).payload(payload).build();
-	}
-
 	private static class Builder {
 		private final OtpErlangObject[] elems = new OtpErlangObject[5];
 
@@ -206,16 +142,6 @@ public class MercuryRequest implements Serializable {
 
 		public Builder resource(final String[] resource) {
 			elems[2] = Converter.encode(resource);
-			return this;
-		}
-
-		public Builder resource(final List<String> resource) {
-			elems[2] = Converter.encode(resource);
-			return this;
-		}
-
-		public Builder params(final Param[] params) {
-			elems[3] = Converter.encode(params);
 			return this;
 		}
 
