@@ -20,9 +20,7 @@
 package net.uiqui.oblivion.mercury.api;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import net.uiqui.oblivion.mercury.error.InvalidResponseException;
@@ -35,83 +33,36 @@ import com.ericsson.otp.erlang.OtpErlangLong;
 import com.ericsson.otp.erlang.OtpErlangObject;
 import com.ericsson.otp.erlang.OtpErlangTuple;
 
-/**
- * The Class MercuryResponse.
- */
 public class MercuryResponse implements Serializable {
 	private static final long serialVersionUID = 6294092702616550011L;
 
 	private Long status = null;
-	private List<Param> params = null;
+	private Map<String, Object> params = null;
 	private Object payload = null;
 
-	private MercuryResponse(final Long status, final List<Param> params, final Object payload) {
+	private MercuryResponse(final Long status, final Map<String, Object> params, final Object payload) {
 		this.status = status;
 		this.params = params;
 		this.payload = payload;
 	}
 
-	/**
-	 * Status.
-	 *
-	 * @return the long
-	 */
 	public long status() {
 		return status;
 	}
 
-	/**
-	 * Params.
-	 *
-	 * @return the list
-	 */
-	public List<Param> params() {
+	public Map<String, Object> params() {
 		return params;
 	}
 
-	/**
-	 * Params2 map.
-	 *
-	 * @return the map
-	 */
-	public Map<String, Object> params2Map() {
-		if (params == null) {
-			return null;
-		}
-
-		final Map<String, Object> map = new HashMap<String, Object>();
-
-		for (Param param : params) {
-			map.put(param.name(), param.value());
-		}
-
-		return map;
-	}
-
-	/**
-	 * Payload.
-	 *
-	 * @return the object
-	 */
 	public Object payload() {
 		return payload;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "MercuryResponse [status=" + status + ", params=" + params + ", payload=" + payload + "]";
 	}
 
-	/**
-	 * Parses the.
-	 *
-	 * @param response the response
-	 * @return the mercury response
-	 * @throws InvalidResponseException the invalid response exception
-	 */
 	public static MercuryResponse parse(final OtpErlangObject response) throws InvalidResponseException {
 		if (response == null) {
 			return null;
@@ -132,7 +83,7 @@ public class MercuryResponse implements Serializable {
 				if (tupleType.atomValue().equals(MercuryConstants.RESPONSE)) {
 					try {
 						final Long status = parseStatus(tuple.elementAt(1));
-						final List<Param> params = parseParams(tuple.elementAt(2));
+						final Map<String, Object> params = parseParams(tuple.elementAt(2));
 						final Object payload = parsePayload(tuple.elementAt(3));
 
 						return new MercuryResponse(status, params, payload);
@@ -167,14 +118,14 @@ public class MercuryResponse implements Serializable {
 		throw new InvalidResponseException("Response is invalid - status must be an long");
 	}
 
-	private static List<Param> parseParams(final OtpErlangObject elementAt) throws InvalidResponseException {
+	private static Map<String, Object> parseParams(final OtpErlangObject elementAt) throws InvalidResponseException {
 		if (elementAt == null) {
 			return null;
 		}
 		
 		if (elementAt instanceof OtpErlangList) {
 			final OtpErlangList list = (OtpErlangList) elementAt;
-			final List<Param> params = new ArrayList<Param>();
+			final Map<String, Object> params = new HashMap<String, Object>();
 			
 			for (OtpErlangObject obj : list) {
 				if (obj instanceof OtpErlangTuple) {
@@ -187,7 +138,7 @@ public class MercuryResponse implements Serializable {
 					String name = (String) Converter.decode(tuple.elementAt(0));
 					Object value = Converter.decode(tuple.elementAt(1));
 					
-					params.add(new Param(name, value));
+					params.put(name, value);
 				} else {
 					throw new InvalidResponseException("Response is invalid - params is not a list of tuple/2");
 				}

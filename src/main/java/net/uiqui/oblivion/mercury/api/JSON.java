@@ -19,54 +19,30 @@
  */
 package net.uiqui.oblivion.mercury.api;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * The Class JSON.
- */
 public class JSON {
 	private final List<Field> fields = new ArrayList<Field>();
-	
-	/**
-	 * Instantiates a new json.
-	 *
-	 * @param fields the fields
-	 */
+
 	public JSON(final Field...fields) {
 		for (Field field : fields) {
 			this.fields.add(field);
 		}
 	}
-	
-	/**
-	 * Field.
-	 *
-	 * @param name the name
-	 * @param value the value
-	 * @return the json
-	 */
+
 	public JSON field(final String name, final Object value) {
 		fields.add(new Field(name, value));
 		return this;
 	}
-	
-	/**
-	 * Fields.
-	 *
-	 * @return the list
-	 */
+
 	public List<Field> fields()  {
 		return fields;
 	}
-	
-	/**
-	 * To map.
-	 *
-	 * @return the map
-	 */
+
 	public Map<String, Object> toMap() {
 		final Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -76,10 +52,7 @@ public class JSON {
 		
 		return map;
 	}
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+
 	@Override
 	public String toString() {
 		final StringBuilder builder = new StringBuilder();
@@ -102,13 +75,7 @@ public class JSON {
 		
 		return builder.toString();
 	}	
-	
-	/**
-	 * From map.
-	 *
-	 * @param fieldMap the field map
-	 * @return the json
-	 */
+
 	public static JSON fromMap(final Map<String, Object> fieldMap) {
 		final JSON json = new JSON();
 		
@@ -118,26 +85,26 @@ public class JSON {
 		
 		return json;
 	}
-	
-	/**
-	 * The Class Field.
-	 */
-	public static class Field extends Param {
+
+	public static class Field implements Serializable {
 		private static final long serialVersionUID = -1349404110784531443L;
 
-		/**
-		 * Instantiates a new field.
-		 *
-		 * @param name the name
-		 * @param value the value
-		 */
+		private String name = null;
+		private Object value = null;
+		
 		public Field(final String name, final Object value) {
-			super(name, value);
+			this.name = name;
+			this.value = value;
 		}
 
-		/* (non-Javadoc)
-		 * @see net.uiqui.oblivion.mercury.api.Param#toString()
-		 */
+		public String name() {
+			return name;
+		}
+
+		public Object value() {
+			return value;
+		}
+
 		@Override
 		public String toString() {
 			return "'" + name() + "' : " + value();

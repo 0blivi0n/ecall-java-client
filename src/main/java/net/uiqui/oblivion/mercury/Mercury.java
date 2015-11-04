@@ -27,48 +27,21 @@ import net.uiqui.oblivion.mercury.io.MercuryConnectionFactory;
 
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
-/**
- * The Class Mercury.
- */
 public class Mercury {
 	private ConnectionPool connectionPool = null;
 
-	/**
-	 * Instantiates a new mercury.
-	 *
-	 * @param config the config
-	 * @param factory the factory
-	 */
 	public Mercury(final GenericObjectPoolConfig config, final MercuryConnectionFactory factory) {
 		this.connectionPool = new ConnectionPool(config, factory);
 	}
 
-	/**
-	 * Instantiates a new mercury.
-	 *
-	 * @param factory the factory
-	 */
 	public Mercury(final MercuryConnectionFactory factory) {
 		this.connectionPool = new ConnectionPool(factory);
 	}
 
-	/**
-	 * Instantiates a new mercury.
-	 *
-	 * @param server the server
-	 * @param port the port
-	 */
 	public Mercury(final String server, final int port) {
 		this.connectionPool = new ConnectionPool(new MercuryConnectionFactory(server, port));
 	}
 
-	/**
-	 * Call.
-	 *
-	 * @param request the request
-	 * @return the mercury response
-	 * @throws Exception the exception
-	 */
 	public MercuryResponse call(final MercuryRequest request) throws Exception {
 		final MercuryConnection conn = connectionPool.getConnection();
 

@@ -17,20 +17,22 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package net.uiqui.oblivion.mercury.error;
+package net.uiqui.oblivion.mercury.api;
 
-public class UnexpectedError extends RuntimeException {
-	private static final long serialVersionUID = 8222408192218632296L;
+import java.util.HashMap;
+import java.util.Map;
 
-	public UnexpectedError(final String message, final Throwable cause) {
-		super(message, cause);
-	}
+public class Proplist {
+	public static class Builder {
+		private final Map<String, Object> params = new HashMap<String, Object>();
 
-	public UnexpectedError(final String message) {
-		super(message);
-	}
+		public Builder put(final String name, final Object value) {
+			params.put(name, value);
+			return this;
+		}
 
-	public UnexpectedError(final Throwable cause) {
-		super(cause);
+		public Map<String, Object> build() {
+			return params;
+		}
 	}
 }

@@ -22,10 +22,11 @@ package net.uiqui.oblivion.mercury.util;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.uiqui.oblivion.mercury.api.JSON;
-import net.uiqui.oblivion.mercury.api.Param;
 import net.uiqui.oblivion.mercury.error.DataTypeNotSupported;
 import net.uiqui.oblivion.mercury.error.UnexpectedError;
 
@@ -56,15 +57,19 @@ public class Converter {
 			return new OtpErlangBinary(value.getBytes(utf8));
 		}
 
-		if (input instanceof Param) {
-			final Param param = (Param) input;
-			final OtpErlangObject[] tuple = { Converter.encode(param.name()), Converter.encode(param.value()) };
-			return new OtpErlangTuple(tuple);
-		}
-
 		if (input instanceof JSON) {
 			final JSON json = (JSON) input;
-			return new OtpErlangTuple(Converter.encode(json.fields()));
+			final OtpErlangObject[] list = new OtpErlangObject[json.fields().size()];
+
+			int index = 0;
+
+			for (JSON.Field field : json.fields()) {
+				OtpErlangObject[] tuple = { Converter.encode(field.name()), Converter.encode(field.value()) };
+				list[index++] = new OtpErlangTuple(tuple);
+			}
+
+			final OtpErlangList proplist = new OtpErlangList(list);
+			return new OtpErlangTuple(proplist);
 		}
 
 		if (input instanceof Byte) {
@@ -133,9 +138,24 @@ public class Converter {
 			return new OtpErlangList(list);
 		}
 
+		if (input instanceof Map<?, ?>) {
+			final Map<?, ?> values = (Map<?, ?>) input;
+			final OtpErlangObject[] list = new OtpErlangObject[values.size()];
+
+			int index = 0;
+
+			for (Map.Entry<?, ?> entry : values.entrySet()) {
+				OtpErlangObject[] tuple = { Converter.encode(entry.getKey()), Converter.encode(entry.getValue()) };
+				list[index++] = new OtpErlangTuple(tuple);
+			}
+
+			return new OtpErlangList(list);
+		}
+
 		throw new DataTypeNotSupported(input.getClass().getName() + " data type is not supported");
 	}
 
+	@SuppressWarnings("unchecked")
 	public static Object decode(final OtpErlangObject input) throws DataTypeNotSupported, UnexpectedError {
 		if (input == null) {
 			return null;
@@ -235,7 +255,7 @@ public class Converter {
 
 		if (input instanceof OtpErlangFloat) {
 			final OtpErlangFloat value = (OtpErlangFloat) input;
-			
+
 			try {
 				return value.floatValue();
 			} catch (OtpErlangRangeException e) {
@@ -251,6 +271,35 @@ public class Converter {
 		if (input instanceof OtpErlangList) {
 			final OtpErlangList values = (OtpErlangList) input;
 			final List<Object> list = new ArrayList<Object>();
+
+			if (values.arity() > 0) {
+				final OtpErlangObject first = values.elementAt(0);
+
+				if (first instanceof OtpErlangTuple) {
+					final OtpErlangTuple tuple = (OtpErlangTuple) first;
+
+					if (tuple.arity() == 2) {
+						@SuppressWarnings("rawtypes")
+						final Map map = new HashMap();
+
+						for (OtpErlangObject obj : values.elements()) {
+							if (obj instanceof OtpErlangTuple) {
+								OtpErlangTuple kv = (OtpErlangTuple) obj;
+
+								if (kv.arity() == 2) {
+									map.put(decode(kv.elementAt(0)), decode(kv.elementAt(1)));
+								} else {
+									throw new UnexpectedError("Expecting an OtpErlangTuple/2 inside the OtpErlangList");
+								}
+							} else {
+								throw new UnexpectedError("Expecting an OtpErlangTuple inside the OtpErlangList");
+							}
+						}
+
+						return map;
+					}
+				}
+			}
 
 			for (OtpErlangObject obj : values.elements()) {
 				list.add(decode(obj));

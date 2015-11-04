@@ -19,18 +19,9 @@
  */
 package net.uiqui.oblivion.mercury.error;
 
-/**
- * The Class CommunicationError.
- */
 public class CommunicationError extends Exception {
 	private static final long serialVersionUID = 7618390963219961994L;
 
-	/**
-	 * Instantiates a new communication error.
-	 *
-	 * @param message the message
-	 * @param cause the cause
-	 */
 	public CommunicationError(final String message, final Throwable cause) {
 		super(message, cause);
 	}

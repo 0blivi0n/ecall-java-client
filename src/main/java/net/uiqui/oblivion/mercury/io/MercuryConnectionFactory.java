@@ -23,70 +23,39 @@ import org.apache.commons.pool2.BasePooledObjectFactory;
 import org.apache.commons.pool2.PooledObject;
 import org.apache.commons.pool2.impl.DefaultPooledObject;
 
-/**
- * A factory for creating MercuryConnection objects.
- */
 public class MercuryConnectionFactory extends BasePooledObjectFactory<MercuryConnection> {
 	private String server = null;
 	private int port = 0;
-	
-	/**
-	 * Instantiates a new mercury connection factory.
-	 *
-	 * @param server the server
-	 * @param port the port
-	 */
+
 	public MercuryConnectionFactory(final String server, final int port) {
 		this.server = server;
 		this.port = port;
 	}
-	
-	/**
-	 * Server.
-	 *
-	 * @return the string
-	 */
+
 	public String server() {
 		return server;
 	}
 
-	/**
-	 * Port.
-	 *
-	 * @return the int
-	 */
 	public int port() {
 		return port;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.apache.commons.pool2.BasePooledObjectFactory#create()
-	 */
 	@Override
 	public MercuryConnection create() throws Exception {
 		return new MercuryConnection(server(), port());
 	}
 
-	/* (non-Javadoc)
-	 * @see org.apache.commons.pool2.BasePooledObjectFactory#wrap(java.lang.Object)
-	 */
 	@Override
 	public PooledObject<MercuryConnection> wrap(final MercuryConnection connection) {
 		return new DefaultPooledObject<MercuryConnection>(connection);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.apache.commons.pool2.BasePooledObjectFactory#validateObject(org.apache.commons.pool2.PooledObject)
-	 */
 	@Override
 	public boolean validateObject(final PooledObject<MercuryConnection> po) {
 		final MercuryConnection connection = po.getObject();
 		return connection.isOpen();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.apache.commons.pool2.BasePooledObjectFactory#destroyObject(org.apache.commons.pool2.PooledObject)
-	 */
 	@Override
 	public void destroyObject(final PooledObject<MercuryConnection> po) throws Exception {
 		final MercuryConnection connection = po.getObject();

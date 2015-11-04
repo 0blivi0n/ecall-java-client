@@ -22,7 +22,7 @@ package net.uiqui.oblivion.mercury.api;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Map;
 
 import net.uiqui.oblivion.mercury.util.Converter;
 import net.uiqui.oblivion.mercury.util.MercuryConstants;
@@ -34,9 +34,6 @@ import com.ericsson.otp.erlang.OtpErlangTuple;
 import com.ericsson.otp.erlang.OtpExternal;
 import com.ericsson.otp.erlang.OtpOutputStream;
 
-/**
- * The Class MercuryRequest.
- */
 public class MercuryRequest implements Serializable {
 	private static final long serialVersionUID = 850764874192765477L;
 
@@ -46,14 +43,6 @@ public class MercuryRequest implements Serializable {
 		this.tuple = tuple;
 	}
 
-	/**
-	 * Write.
-	 *
-	 * @param os
-	 *            the os
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 */
 	public void write(final OutputStream os) throws IOException {
 		final OtpOutputStream stream = new OtpOutputStream();
 		stream.write(OtpExternal.versionTag);
@@ -62,65 +51,21 @@ public class MercuryRequest implements Serializable {
 		stream.close();
 	}
 
-	/**
-	 * Builds the.
-	 *
-	 * @param opName
-	 *            the op name
-	 * @param resource
-	 *            the resource
-	 * @return the mercury request
-	 */
 	public static MercuryRequest build(final String opName, final String[] resource) {
 		final Builder builder = new Builder();
 		return builder.operation(opName).resource(resource).build();
 	}
 
-	/**
-	 * Builds the.
-	 *
-	 * @param opName
-	 *            the op name
-	 * @param resource
-	 *            the resource
-	 * @param params
-	 *            the params
-	 * @return the mercury request
-	 */
-	public static MercuryRequest build(final String opName, final String[] resource, final List<Param> params) {
+	public static MercuryRequest build(final String opName, final String[] resource, final Map<String, Object> params) {
 		final Builder builder = new Builder();
 		return builder.operation(opName).resource(resource).params(params).build();
 	}
 
-	/**
-	 * Builds the.
-	 *
-	 * @param opName
-	 *            the op name
-	 * @param resource
-	 *            the resource
-	 * @param params
-	 *            the params
-	 * @param payload
-	 *            the payload
-	 * @return the mercury request
-	 */
-	public static MercuryRequest build(final String opName, final String[] resource, final List<Param> params, final Object payload) {
+	public static MercuryRequest build(final String opName, final String[] resource, final Map<String, Object> params, final Object payload) {
 		final Builder builder = new Builder();
 		return builder.operation(opName).resource(resource).params(params).payload(payload).build();
 	}
 
-	/**
-	 * Builds the.
-	 *
-	 * @param opName
-	 *            the op name
-	 * @param resource
-	 *            the resource
-	 * @param payload
-	 *            the payload
-	 * @return the mercury request
-	 */
 	public static MercuryRequest build(final String opName, final String[] resource, final Object payload) {
 		final Builder builder = new Builder();
 		return builder.operation(opName).resource(resource).payload(payload).build();
@@ -145,7 +90,7 @@ public class MercuryRequest implements Serializable {
 			return this;
 		}
 
-		public Builder params(final List<Param> params) {
+		public Builder params(final Map<String, Object> params) {
 			elems[3] = Converter.encode(params);
 			return this;
 		}
