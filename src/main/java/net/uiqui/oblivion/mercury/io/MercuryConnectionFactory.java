@@ -26,8 +26,14 @@ import org.apache.commons.pool2.impl.DefaultPooledObject;
 public class MercuryConnectionFactory extends BasePooledObjectFactory<MercuryConnection> {
 	private String server = null;
 	private int port = 0;
+	
+	protected MercuryConnectionFactory() {
+		super();
+	} 
 
 	public MercuryConnectionFactory(final String server, final int port) {
+		this();
+		
 		this.server = server;
 		this.port = port;
 	}

@@ -25,8 +25,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class JSON {
+public class JSON implements Serializable {
+	private static final long serialVersionUID = -8739986265954655733L;
+	
 	private final List<Field> fields = new ArrayList<Field>();
+	private transient Map<String, Object> fieldMap = null;
 
 	public JSON(final Field...fields) {
 		for (Field field : fields) {
@@ -42,8 +45,29 @@ public class JSON {
 	public List<Field> fields()  {
 		return fields;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public <T> T value(final String name) {
+		if (fieldMap == null) {
+			convertFields();
+		}
+		
+		return (T) fieldMap.get(name);
+	}	
+
+	private synchronized void convertFields() {
+		if (fieldMap != null) {
+			return;
+		}
+		
+		fieldMap = toMap();
+	}
 
 	public Map<String, Object> toMap() {
+		if (fieldMap != null) {
+			return fieldMap;
+		}
+		
 		final Map<String, Object> map = new HashMap<String, Object>();
 		
 		for (Field field : fields) {

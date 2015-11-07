@@ -23,6 +23,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Proplist {
+	public static Map<String, Object> build(final String name, final Object value) {
+		final Builder builder = new Builder();
+		builder.put(name, value);
+		return builder.build();
+	}
+	
 	public static class Builder {
 		private final Map<String, Object> params = new HashMap<String, Object>();
 

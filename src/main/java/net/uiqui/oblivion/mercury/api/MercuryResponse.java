@@ -54,10 +54,11 @@ public class MercuryResponse implements Serializable {
 		return params;
 	}
 
-	public Object payload() {
-		return payload;
+	@SuppressWarnings("unchecked")
+	public <T> T payload() {
+		return (T) payload;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "MercuryResponse [status=" + status + ", params=" + params + ", payload=" + payload + "]";
