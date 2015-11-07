@@ -270,7 +270,6 @@ public class Converter {
 
 		if (input instanceof OtpErlangList) {
 			final OtpErlangList values = (OtpErlangList) input;
-			final List<Object> list = new ArrayList<Object>();
 
 			if (values.arity() > 0) {
 				final OtpErlangObject first = values.elementAt(0);
@@ -300,6 +299,8 @@ public class Converter {
 					}
 				}
 			}
+			
+			final List<Object> list = new ArrayList<Object>();
 
 			for (OtpErlangObject obj : values.elements()) {
 				list.add(decode(obj));
