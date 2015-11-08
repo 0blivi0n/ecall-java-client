@@ -49,7 +49,7 @@ public class Converter {
 
 	public static OtpErlangObject encode(final Object input) throws DataTypeNotSupported {
 		if (input == null) {
-			return null;
+			return new OtpErlangAtom("null");
 		}
 
 		if (input instanceof String) {
@@ -173,7 +173,17 @@ public class Converter {
 
 		if (input instanceof OtpErlangAtom) {
 			final OtpErlangAtom value = (OtpErlangAtom) input;
-			return value.atomValue();
+			final String atomStr = value.atomValue();
+			
+			if (atomStr.equals("true")) {
+				return Boolean.TRUE;
+			} else if (atomStr.equals("false")) {
+				return Boolean.FALSE;
+			} else if (atomStr.equals("null")) {
+				return null;
+			} else {
+				return atomStr;
+			}
 		}
 
 		if (input instanceof OtpErlangTuple) {
