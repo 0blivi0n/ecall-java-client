@@ -38,11 +38,11 @@ public class MercuryConnectionFactory extends BasePooledObjectFactory<MercuryCon
 		this.port = port;
 	}
 
-	public String server() {
+	private String server() {
 		return server;
 	}
 
-	public int port() {
+	private int port() {
 		return port;
 	}
 
