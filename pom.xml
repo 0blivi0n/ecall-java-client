@@ -5,7 +5,7 @@
 	<groupId>org.oblivion-cache</groupId>
 	<artifactId>mercury-java-client</artifactId>
 	<packaging>jar</packaging>
-	<version>0.5.1</version>
+	<version>0.5.2</version>
 	<name>Mercury-Java-Client</name>
 	<description>Mercury client for JAVA applications</description>
 	<url>https://github.com/0blivi0n/mercury-java-client.git</url>
@@ -38,7 +38,7 @@
 		<dependency>
 			<groupId>org.erlang.otp</groupId>
 			<artifactId>jinterface</artifactId>
-			<version>1.5.6</version>
+			<version>1.6.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
