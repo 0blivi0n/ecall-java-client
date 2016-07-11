@@ -22,7 +22,7 @@ package net.uiqui.oblivion.mercury.api;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Proplist {
+public class Params {
 	public static Map<String, Object> build(final String name, final Object value) {
 		final Builder builder = new Builder();
 		builder.put(name, value);

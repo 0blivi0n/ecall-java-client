@@ -25,7 +25,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 import net.uiqui.oblivion.mercury.api.MercuryRequest;
-import net.uiqui.oblivion.mercury.api.MercuryResponse;
+import net.uiqui.oblivion.mercury.api.MercuryReply;
 import net.uiqui.oblivion.mercury.error.CommunicationError;
 import net.uiqui.oblivion.mercury.error.ConnectionError;
 import net.uiqui.oblivion.mercury.error.InvalidResponseException;
@@ -46,7 +46,7 @@ public class MercuryConnection {
 		}
 	}
 
-	public MercuryResponse call(final MercuryRequest request) throws CommunicationError, InvalidResponseException {
+	public MercuryReply call(final MercuryRequest request) throws CommunicationError, InvalidResponseException {
 		try {
 			final OutputStream out = socket.getOutputStream();
 			final InputStream in = socket.getInputStream();
@@ -63,7 +63,7 @@ public class MercuryConnection {
 				final OtpInputStream buf = new OtpInputStream(payload);
 				final OtpErlangObject response = OtpErlangObject.decode(buf);
 
-				return MercuryResponse.parse(response);
+				return MercuryReply.parse(response);
 			}
 
 			return null;

@@ -39,6 +39,7 @@ import com.ericsson.otp.erlang.OtpErlangFloat;
 import com.ericsson.otp.erlang.OtpErlangInt;
 import com.ericsson.otp.erlang.OtpErlangList;
 import com.ericsson.otp.erlang.OtpErlangLong;
+import com.ericsson.otp.erlang.OtpErlangMap;
 import com.ericsson.otp.erlang.OtpErlangObject;
 import com.ericsson.otp.erlang.OtpErlangRangeException;
 import com.ericsson.otp.erlang.OtpErlangString;
@@ -139,17 +140,19 @@ public class Converter {
 		}
 
 		if (input instanceof Map<?, ?>) {
-			final Map<?, ?> values = (Map<?, ?>) input;
-			final OtpErlangObject[] list = new OtpErlangObject[values.size()];
+			final Map<?, ?> map = (Map<?, ?>) input;
+			final OtpErlangObject[] keys = new OtpErlangObject[map.size()];
+			final OtpErlangObject[] values = new OtpErlangObject[map.size()];
 
 			int index = 0;
 
-			for (Map.Entry<?, ?> entry : values.entrySet()) {
-				OtpErlangObject[] tuple = { Converter.encode(entry.getKey()), Converter.encode(entry.getValue()) };
-				list[index++] = new OtpErlangTuple(tuple);
+			for (Map.Entry<?, ?> entry : map.entrySet()) {
+				keys[index] = Converter.encode(entry.getKey());
+				values[index] = Converter.encode(entry.getValue());
+				index++;
 			}
 
-			return new OtpErlangList(list);
+			return new OtpErlangMap(keys, values);
 		}
 
 		throw new DataTypeNotSupported(input.getClass().getName() + " data type is not supported");
@@ -184,6 +187,20 @@ public class Converter {
 			} else {
 				return atomStr;
 			}
+		}
+		
+		if (input instanceof OtpErlangMap) {
+			final OtpErlangMap inputMap = (OtpErlangMap) input;
+			final Map<String, Object> outputMap = new HashMap<String, Object>();
+
+			for (Map.Entry<OtpErlangObject, OtpErlangObject> entry : inputMap.entrySet()) {
+				String name = (String) Converter.decode(entry.getKey());
+				Object value = Converter.decode(entry.getValue());
+
+				outputMap.put(name, value);
+			}
+
+			return outputMap;
 		}
 
 		if (input instanceof OtpErlangTuple) {

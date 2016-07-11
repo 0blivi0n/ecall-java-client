@@ -20,7 +20,7 @@
 package net.uiqui.oblivion.mercury;
 
 import net.uiqui.oblivion.mercury.api.MercuryRequest;
-import net.uiqui.oblivion.mercury.api.MercuryResponse;
+import net.uiqui.oblivion.mercury.api.MercuryReply;
 import net.uiqui.oblivion.mercury.io.ConnectionPool;
 import net.uiqui.oblivion.mercury.io.MercuryConnection;
 import net.uiqui.oblivion.mercury.io.MercuryConnectionFactory;
@@ -42,7 +42,7 @@ public class Mercury {
 		this.connectionPool = new ConnectionPool(new MercuryConnectionFactory(server, port));
 	}
 
-	public MercuryResponse call(final MercuryRequest request) throws Exception {
+	public MercuryReply call(final MercuryRequest request) throws Exception {
 		final MercuryConnection conn = connectionPool.getConnection();
 
 		try {

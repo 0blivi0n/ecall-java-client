@@ -21,6 +21,6 @@ package net.uiqui.oblivion.mercury.util;
 
 public class MercuryConstants {
 	public static final String REQUEST = "request";
-	public static final String RESPONSE = "response";
+	public static final String REPLY = "reply";
 	public static final String EMPTY = "empty";
 }

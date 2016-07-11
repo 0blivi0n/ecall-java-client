@@ -14,7 +14,7 @@ Maven dependency:
 <dependency>
     <groupId>org.oblivion-cache</groupId>
     <artifactId>mercury-java-client</artifactId>
-    <version>0.5.1</version>
+    <version>0.5.2</version>
 </dependency>
  ```
 
