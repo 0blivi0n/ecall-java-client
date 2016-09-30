@@ -24,15 +24,15 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.Map;
 
-import net.uiqui.oblivion.mercury.util.Converter;
-import net.uiqui.oblivion.mercury.util.MercuryConstants;
-
 import com.ericsson.otp.erlang.OtpErlangAtom;
-import com.ericsson.otp.erlang.OtpErlangList;
+import com.ericsson.otp.erlang.OtpErlangMap;
 import com.ericsson.otp.erlang.OtpErlangObject;
 import com.ericsson.otp.erlang.OtpErlangTuple;
 import com.ericsson.otp.erlang.OtpExternal;
 import com.ericsson.otp.erlang.OtpOutputStream;
+
+import net.uiqui.oblivion.mercury.util.Converter;
+import net.uiqui.oblivion.mercury.util.MercuryConstants;
 
 public class MercuryRequest implements Serializable {
 	private static final long serialVersionUID = 850764874192765477L;
@@ -76,7 +76,7 @@ public class MercuryRequest implements Serializable {
 
 		private Builder() {
 			elems[0] = new OtpErlangAtom(MercuryConstants.REQUEST);
-			elems[3] = new OtpErlangList();
+			elems[3] = new OtpErlangMap();
 			elems[4] = new OtpErlangAtom(MercuryConstants.EMPTY);
 		}
 

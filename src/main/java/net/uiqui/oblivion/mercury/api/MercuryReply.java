@@ -20,7 +20,6 @@
 package net.uiqui.oblivion.mercury.api;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Map;
 
 import com.ericsson.otp.erlang.OtpErlangAtom;
